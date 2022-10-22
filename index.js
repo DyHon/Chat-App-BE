@@ -32,7 +32,7 @@ const server = app.listen(process.env.PORT, () => {
 
 const io = socket(server, {
   cors: {
-    origin: "http://localhost:3000",
+    origin: "https://zyhon.vercel.app",
     credentials: true,
     methods: ["GET", "POST"]
   }
@@ -59,4 +59,4 @@ io.on('connection', (socket) => {
 });
 
 
-module.exports - app;
+module.exports = app;
