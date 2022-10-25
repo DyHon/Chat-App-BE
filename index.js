@@ -32,7 +32,7 @@ const server = app.listen(process.env.PORT, () => {
 
 const io = socket(server, {
   cors: {
-    origin: "https://zyhon.vercel.app",
+    origin: "*",
     credentials: true,
     methods: ["GET", "POST"]
   }
