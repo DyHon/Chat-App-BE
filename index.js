@@ -39,7 +39,7 @@ const io = new socket.Server(httpServer, {
     allowedHeaders: ["my-custom-header"],
   }
 })
-httpServer.listen(process.env.PORT, () => console.log(`Listening on port ${port}`));
+httpServer.listen(process.env.PORT, () => console.log(`Listening on port ${process.env.PORT}`));
 
 global.onlineUsers = new Map();
 
