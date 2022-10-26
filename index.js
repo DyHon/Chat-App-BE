@@ -11,8 +11,7 @@ const app = express();
 require('dotenv').config();
 
 app.use(cors({
-  origin: 'https://zyhon.vercel.app',
-  credentials: true,
+  origin: 'https://zyhon.vercel.app'
 }));
 app.use(express.json());
 app.use("/api/auth", userRoutes)
