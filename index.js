@@ -17,7 +17,7 @@ app.use("/api/message", messageRoutes)
 
 app.all('/', function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "*");
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
   next()
 });
 
@@ -37,6 +37,7 @@ const httpServer = http.createServer();
 const io = new socket.Server(httpServer, {
   cors: {
     origin: "https://zyhonserver.vercel.app",
+    credentials: true,
     methods: ["GET", "POST"],
     allowedHeaders: ["my-custom-header"],
   }
