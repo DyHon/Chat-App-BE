@@ -44,15 +44,10 @@ io.on('connection', (socket) => {
   global.chatSocket = socket;
   socket.on('add-user', (userId) => {
     onlineUsers.set(userId, socket.id);
-    console.log(onlineUsers);
   });
   socket.on('send-msg', (data) => {
     const sendUserSocket = onlineUsers.get(data.to);
-    console.log(data.to);
-    console.log(onlineUsers);
-    console.log(sendUserSocket);
     if (sendUserSocket) {
-      console.log("check");
       socket.to(sendUserSocket).emit('msg-recieve', data.message);
     };
   });
