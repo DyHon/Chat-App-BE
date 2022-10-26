@@ -30,7 +30,8 @@ async function connect() {
 
 connect();
 
-const httpServer = http.createServer();
+const httpServer = http.createServer(app);
+httpServer.listen(process.env.PORT, () => console.log(`Listening on port ${process.env.PORT}`));
 const io = new socket.Server(httpServer, {
   cors: {
     origin: "https://zyhonserver.vercel.app",
@@ -39,7 +40,6 @@ const io = new socket.Server(httpServer, {
     allowedHeaders: ["my-custom-header"],
   }
 })
-httpServer.listen(process.env.PORT, () => console.log(`Listening on port ${process.env.PORT}`));
 
 global.onlineUsers = new Map();
 
