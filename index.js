@@ -29,7 +29,12 @@ connect();
 
 const httpServer = http.createServer(app);
 httpServer.listen(process.env.PORT, () => console.log(`Listening on port ${process.env.PORT}`));
-const io = new socket.Server(httpServer)
+const io = new socket.Server(httpServer, {
+  cors: {
+    origin: "*",
+    methods: ["GET", "POST"]
+  }
+});
 
 global.onlineUsers = new Map();
 
