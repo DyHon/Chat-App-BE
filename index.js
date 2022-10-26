@@ -39,6 +39,7 @@ const io = new socket.Server(httpServer, {
     allowedHeaders: ["my-custom-header"],
   }
 })
+httpServer.listen(process.env.PORT, () => console.log(`Listening on port ${port}`));
 
 global.onlineUsers = new Map();
 
@@ -55,6 +56,9 @@ io.on('connection', (socket) => {
     if (sendUserSocket) {
       socket.to(sendUserSocket).emit('msg-recieve', data.message);
     };
+  });
+  socket.on('disconnect', function () {
+    console.log('A user disconnected');
   });
 });
 
