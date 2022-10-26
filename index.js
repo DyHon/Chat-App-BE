@@ -10,9 +10,7 @@ const socket = require("socket.io");
 const app = express();
 require('dotenv').config();
 
-app.use(cors({
-  origin: 'https://zyhon.vercel.app'
-}));
+app.use(cors());
 app.use(express.json());
 app.use("/api/auth", userRoutes)
 app.use("/api/message", messageRoutes)
