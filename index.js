@@ -16,7 +16,7 @@ app.use("/api/auth", userRoutes)
 app.use("/api/message", messageRoutes)
 
 app.all('/', function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Origin", ["https://zyhonserver.vercel.app", "https://zyhon.vercel.app"]);
   res.header("Access-Control-Allow-Headers", "X-Requested-With");
   next()
 });
