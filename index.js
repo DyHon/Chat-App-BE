@@ -37,7 +37,6 @@ const httpServer = http.createServer();
 const io = new socket.Server(httpServer, {
   cors: {
     origin: "https://zyhonserver.vercel.app",
-    credentials: true,
     methods: ["GET", "POST"],
     allowedHeaders: ["my-custom-header"],
   }
