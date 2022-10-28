@@ -35,6 +35,25 @@ module.exports.getAllMessage = async (req, res, next) => {
   };
 };
 
+module.exports.checkUnSeenMessage = async (req, res, next) => {
+  try {
+    const userId = req.params.id;
+    const messages = await messageModel.find({
+      users: {
+        $all: [userId],
+      }
+    });
+    const unSeenMsgFrom = messages.map((msg) => {
+      return {
+        userId: msg.sender.toString(),
+      }
+    })
+    res.json(unSeenMsgFrom);
+  } catch (ex) {
+    next(ex);
+  };
+};
+
 module.exports.seenMessage = async (req, res, next) => {
   try {
     const messageId = req.body.id;
