@@ -3,12 +3,11 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const userRoutes = require('./routes/userRoutes');
 const messageRoutes = require('./routes/messageRoutes');
-
-const http = require('http');
-
 const socket = require("socket.io");
-const app = express();
+
+const app = express()
 require('dotenv').config();
+
 
 app.use(cors({
   origin: '*',
@@ -29,33 +28,28 @@ async function connect() {
 
 connect();
 
-const httpServer = http.createServer(app);
+const server = app.listen(process.env.PORT);
 
-const io = new socket.Server(httpServer, {
+const io = socket(server, {
   cors: {
-    origin: "*",
-    methods: ["GET", "POST"]
-  }
+    origin: "https://zyhon.vercel.app",
+    credentials: true,
+  },
 });
 
-global.onlineUsers = new Map();
 
-io.on('connection', (socket) => {
+global.onlineUsers = new Map();
+io.on("connection", (socket) => {
   global.chatSocket = socket;
-  console.log("connecting...")
-  socket.on('add-user', (userId) => {
-    console.log("add user")
+  socket.on("add-user", (userId) => {
     onlineUsers.set(userId, socket.id);
-    console.log("connect socket successfully");
   });
-  socket.on('send-msg', (data) => {
+
+  socket.on("send-msg", (data) => {
     const sendUserSocket = onlineUsers.get(data.to);
     if (sendUserSocket) {
-      socket.to(sendUserSocket).emit('msg-recieve', data.message);
-    };
-  });
-  socket.on('disconnect', function () {
-    console.log('A user disconnected');
+      socket.to(sendUserSocket).emit("msg-recieve", data.msg);
+    }
   });
 });
 
