@@ -4,7 +4,7 @@ module.exports.addMessage = async (req, res, next) => {
   try {
     const { from, to, message } = req.body;
     const data = await messageModel.create({
-      message: { text: message },
+      message: message,
       users: [from, to],
       sender: from,
     });
@@ -26,6 +26,7 @@ module.exports.getAllMessage = async (req, res, next) => {
       return {
         fromSelf: msg.sender.toString() === from,
         message: msg.message.text,
+        id: msg._id
       };
     });
     res.json(getMessages);
@@ -33,3 +34,17 @@ module.exports.getAllMessage = async (req, res, next) => {
     next(ex);
   };
 };
+
+module.exports.seenMessage = async (req, res, next) => {
+  try {
+    const messageId = req.body.id;
+    const msg = req.body.message;
+    await messageModel.findByIdAndUpdate(messageId, {
+      message: msg
+    });
+    return res.json({ status: true });
+  } catch (ex) {
+    next(ex);
+  };
+};
+
