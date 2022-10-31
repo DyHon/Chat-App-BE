@@ -38,9 +38,8 @@ module.exports.getAllMessage = async (req, res, next) => {
 module.exports.checkUnSeenMessage = async (req, res, next) => {
   try {
     const userId = req.params.id;
-    const messages = await messageModel
-      .where(message => message.seen === false)
-      .where(users => users.at(1) == userId);
+    const messages = await messageModel.find( message.seenfalse );
+    console.log(messages);
     const from = messages.map((message) => {
       return {
         from: message.sender.toString()
